@@ -1,0 +1,36 @@
+\documentclass[a4paper, 12pt]{article}
+\newcommand{\va}{\mathbf{a}}
+\newcommand{\vb}{\mathbf{b}}
+
+\usepackage[margin = 1in]{geometry}
+
+\begin{document}
+\section*{Chapter 2}
+
+
+\textbf{Affine set} A subspace $S$ is a line or a plane go through the origin, i.e., $0\in S$. A subspace can be represented by a linear combination of basis vectors $b_k$'s
+$$S = \{\lambda_1 b_1+\cdots+\lambda_p b_p, \lambda_k\in R\}$$.
+If we move this subspace by an offset $o\notin S$ (or in the direction of $o$), we will get an affine set
+$$A = o+S = \{o+\lambda_1 b_1+\cdots+\lambda_p b_p, \lambda_k\in R\}$$.
+
+For what is discussed in the book, consider the simplest example with only one predictor
+$$
+y = \beta_0 + \beta_1 x
+$$
+\begin{itemize}
+\item If the constant is included, then each point is $z = (1,x,y)^T$. Let $\gamma = (\beta_0, \beta_1, -1)$. Then the point $z$ is in the subspace defined by $S = \{z: z^T\gamma = 0\}$.
+\item  If the constant is not included, then each point is $z = (x,y)$. Let $\gamma = (\beta_1, -1)$. Each point is in the affine set defined by $A = (0, \beta_0)^T + \{
+z: z^T\gamma = 0\}$. The offset is $o=(0, \beta_0)^T$.
+\end{itemize}
+
+\noindent \textbf{Greatest uphill direction}. By first order Tylor expansion,
+$$
+f(X+\Delta) - f(X) \approx \langle f'(X) , \Delta \rangle = \Vert f'(x)\Vert \Vert \Delta\Vert \cos\theta
+$$
+where $\langle \va,\vb\rangle = \sum_i a_i b_i$ is the inner product of vector 
+$\va$ and $\vb$. Inner product is equal to the vector norm mutiplied by $\cos\theta$, and $\theta$ is the angle between the two vectors. If $\Delta$ is in the same direction as $f'(x)=\beta$, then $\theta = 0$ and $\cos\theta = 1$. The increase of function value $f(X+\Delta) - f(x) $ is greatest.  
+
+Image we are climbing a mountain, our current position is $X$ and the height is $f(X)$. We wish to go to the top of the mountain. 
+If we walk from $X$ in the direction of $\beta$, we get greatest increase in $f(X)$ (uphill direction).
+
+\end{document}
