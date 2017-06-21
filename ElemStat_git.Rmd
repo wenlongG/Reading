@@ -19,7 +19,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 1. Linear model  makes huge assumption, yield stable but probably inaccurate predictions(low variance and high bias); while K-nearest neighbors model make mild assumptions, its predictions often accurate but unstable
 
+<span style="color:red">
 2. P12,  1st paragraph, what is affine set? 	2nd paragraph, why steepest uphill direction?
+</span>
 
 3. The error on the training dataset should be approximately an increasing function of k for k-nearest neighbor fit; cannot use sum of squared error as a criteria for picking k.
 
@@ -37,6 +39,30 @@ knitr::opts_chunk$set(echo = TRUE)
 
 4. If $L_1$ loss: $E|Y-f(X)|$, the solution will be conditional median $f(x)= median(Y|X=x)$. The discontinuity in its derivatives hendered their wide use.
 
-5. Loss function for categorical prediction is represented by a matrix L=card(G) with 0 on the diagonal and nonnegative elsewhere(often 1s). How to calculate (2.19) ~ (2.23)?
+5. Loss function for categorical prediction is represented by a matrix L=card(G) with 0 on the diagonal and nonnegative elsewhere(often 1s).
+<span style="color:red">
+How to calculate (2.19) ~ (2.23)?
+</span>
 
+6/20/2017
+
+1. Curse of dimensionality: (1) To capture a fraction r of a p-dimensional hypercube,  the expected edge length will be $r^{1/p}$, i.e., to capture 1% of the data forming a local hypercube, we need to vover 63% of the range in each dimension/variable of the input; 
+
+(2)Mean distance of the closest point increases for a large $p$ so the prediction is more difficult near the edges of the training sample;
+
+(3)Sampling density is proportional to $N^{1/p}$, i.e., $100^10$ sample needed for p=10 to get same sample density of 100 in 1D.
+
+(4)The complexity of function(Y=f(X)) with many variables(larger p) can grow with the dimension p, and if we want to estimate such functions with same accuracy as in low dim, then we need the size of training data grow exponentially.
+
+2.Calculation in (2.27) shows why prediction error have additional variance $\sigma^2$.
+
+3. If we assume it's a linear model, (2.28) shows the expected EPE increase linearly in p. By imposing linear restrictions, we have avoided the curse of dimensionality.
+
+6/21/2017
+
+1. <span style="color:red">
+how to get the $\hat{y}_0$ on the bottom of page 24?
+</span>
+
+2. figure 2.9 shows comparison of least square and 1-nearest neighbor with their ration for two senario(get the way of comparison). There is acutally a whole spectrum of methods between the rigid linear models and the extreme flexible 1-nearest neighbor models.
 
