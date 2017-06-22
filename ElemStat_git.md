@@ -53,7 +53,7 @@ Ch2
 
 6/21/2017
 
-1.  <span style="color:red"> how to get the $\hat{y}_0$ on the bottom of page 24? </span>
+1.  <span style="color:red"> how to get the $\\hat{y}\_0$ on the bottom of page 24? </span>
 
 2.  figure 2.9 shows comparison of least square and 1-nearest neighbor with their ration for two senario(get the way of comparison). There is acutally a whole spectrum of methods between the rigid linear models and the extreme flexible 1-nearest neighbor models. Section 2.6 using other f(X), specifically designed to overcome the dimensionality problem.
 
@@ -61,6 +61,18 @@ Ch2
 
 4.  <span style="color:red"> In the beginning of 2.6.1, Why the conditional distribution *P*(*Y*|*X*) depends on *X* only through the conditional mean *f*(*x*)=*E*(*Y*|*X* = *x*)? Answered in equation (2.34). </span>
 
-5.Two ways of understanding: Supervised learning VS function approximation. Learning by example: the learning algorithm modify its input/output relationship in response to the prediction error; In terms of function approximation, we imagine our parametrized function as a surface in p+1 dim space and we observed noisy representations from it.
+5.  Two ways of understanding: Supervised learning VS function approximation. Learning by example: the learning algorithm modify its input/output relationship in response to the prediction error; In terms of function approximation, we imagine our parametrized function as a surface in p+1 dim space and we observed noisy representations from it.
 
-1.  The principle of MLE assumes that the most reasonable values for *θ* are those for which the probability of the observed sample is largest.
+6.  The principle of MLE assumes that the most reasonable values for *θ* are those for which the probability of the observed sample is largest.
+
+6/22/2017
+
+1.  need Approaches to make efficient use of structured data. There are infinitely many solutions for $\\hat{f}$, so we impose restritions on eligible solutions.
+
+2.  Most training methods imposed complexity restrictions in small neighborhood of input space, e.g., $\\hat{f}$ exhibits special structure such as nearly constant, linear or low order polynomial behavior in the small neighborhood.
+
+3.  Any method that attempt to produce locally varying functions in small isotropic neighborhood will run into problems in high dimension; all methods that overcome the dimensionality problems have an associated metric for measuring neighborhoods, which does not allow the neighborhood to be simutaneously small in all directions.
+
+4.  nonparametric methods falls in several classes and each of the classes has associated with one or more smoothing parameters that control the effective size of the local neighborhood.
+
+5.  <span style="color:red"> why called adaptively chosen basis function methods in the last paragraph page 36? </span>
