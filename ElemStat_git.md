@@ -59,7 +59,7 @@ Ch2
 
 3.  In additive error model,*Y* = *f*(*X*)+*ϵ*,*ϵ* is independent of X.More often, (X,Y) will not have a deterministic relationship *Y* = *f*(*X*), so the additive model assume that we can capture all the departures from a deterministic relationship via the error *ϵ*.
 
-4.  <span style="color:red"> In the beginning of 2.6.1, Why the conditional distribution *P*(*Y*|*X*) depends on *X* only through the conditional mean *f*(*x*)=*E*(*Y*|*X* = *x*)? </span>
+4.  <span style="color:red"> In the beginning of 2.6.1, Why the conditional distribution *P*(*Y*|*X*) depends on *X* only through the conditional mean *f*(*x*)=*E*(*Y*|*X* = *x*)? Answered in equation (2.34). </span>
 
 5.Two ways of understanding: Supervised learning VS function approximation. Learning by example: the learning algorithm modify its input/output relationship in response to the prediction error; In terms of function approximation, we imagine our parametrized function as a surface in p+1 dim space and we observed noisy representations from it.
 
