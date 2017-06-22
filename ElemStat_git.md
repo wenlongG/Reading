@@ -53,7 +53,7 @@ Ch2
 
 6/21/2017
 
-1.  <span style="color:red"> how to get the $\\hat{y}\_0$ on the bottom of page 24? </span>
+1.  <span style="color:red"> how to get the $\hat{y}_0$ on the bottom of page 24? </span>
 
 2.  figure 2.9 shows comparison of least square and 1-nearest neighbor with their ration for two senario(get the way of comparison). There is acutally a whole spectrum of methods between the rigid linear models and the extreme flexible 1-nearest neighbor models. Section 2.6 using other f(X), specifically designed to overcome the dimensionality problem.
 

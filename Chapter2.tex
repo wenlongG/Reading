@@ -23,6 +23,7 @@ $$
 z: z^T\gamma = 0\}$. The offset is $o=(0, \beta_0)^T$.
 \end{itemize}
 
+\vspace{30pt}
 \noindent \textbf{Greatest uphill direction}. By first order Tylor expansion,
 $$
 f(X+\Delta) - f(X) \approx \langle f'(X) , \Delta \rangle = \Vert f'(x)\Vert \Vert \Delta\Vert \cos\theta
@@ -32,5 +33,40 @@ $\va$ and $\vb$. Inner product is equal to the vector norm mutiplied by $\cos\th
 
 Image we are climbing a mountain, our current position is $X$ and the height is $f(X)$. We wish to go to the top of the mountain. 
 If we walk from $X$ in the direction of $\beta$, we get greatest increase in $f(X)$ (uphill direction).
+
+
+\vspace{30pt}
+\noindent \textbf{Equation 2.19--2.23}. 
+(2.19) takes expectation with respect to both $X,\ G$. 
+$$
+\mathrm{EPE} = E_{X,G}[L(G,\hat{G}(X)]
+$$
+(2.20) uses the following relation
+$$
+\mathrm{EPE} = E_X\Big[ E_G[L(G,\hat{G}(X) | X]\Big]
+$$
+The conditional expection inside is replace by the summation in
+(2.20). Then (2.21) tries to minimize the above risk to get an
+estimator $\hat{G}$. (2.22) and (2.23) are the solution for 0-1 loss
+function. It classifies $X$ to the most probable class. 
+
+
+\vspace{30pt}
+\noindent \textbf{Equation 2.26, ($\hat{y}_0$)}. 
+
+\begin{eqnarray*}
+\hat{y}_0 &=& x_0^T\hat{\beta} = x_0^T (X^TX)^{-1} X^Ty\\
+ & =& x_0^T (X^TX)^{-1} X^T (X\beta + \epsilon) \\
+ & = & x_0^T (X^TX)^{-1} X^T X\beta +x_0 (X^TX)^{-1} X^T X \epsilon \\
+ & = & x_0^T \beta +x_0 (X^TX)^{-1} X^T X \epsilon 
+\end{eqnarray*}
+
+
+
+\vspace{30pt}
+\noindent \textbf{Section 2.6.1}
+$Y = f(X) + \epsilon$. Only $\epsilon$ is random and its distribution
+is known or fixed. The $f(X)$ shifts the mean of $\epsilon$. 
+Given $X$, we know $f(X)$, so we also know the distribution of $Y$. 
 
 \end{document}
