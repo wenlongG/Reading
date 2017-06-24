@@ -75,4 +75,27 @@ Ch2
 
 4.  nonparametric methods falls in several classes and each of the classes has associated with one or more smoothing parameters that control the effective size of the local neighborhood.
 
-5.  <span style="color:red"> why called adaptively chosen basis function methods in the last paragraph page 36? </span>
+5.  <span style="color:red"> why called adaptively chosen basis function methods in the last and second last paragraph of page 36? </span>
+
+6/23/2017
+
+1.  Roughness penalty controls the second derivative of *f*, to get a smooth solution. Penalized least-sqaure criterion
+    $$PRSS(f;\\lambda)= \\sum\_{i=1}^N(y\_i -f(x\_i))^2 + \\lambda\\int\[f''(x)\]^2dx$$
+    . when *λ* = ∞, only linear function(the most smooth) are permitted.
+
+2.  Penalty function, or regularization methods express our prior belief that the type of functions we seek exhibit smooth behavior.
+
+3.  Kernal methods specified the nature of the local neighborhood. Kernal function *K*<sub>*λ*</sub>(*x*<sub>0</sub>, *x*) assigns weights to points x in a region around *x*<sub>0</sub>. Define a local regression estimate $f\_{\\hat{\\theta}}(x\_0)$ where $\\hat{\\theta}$ minimizes
+    $$RSS(f\_{\\theta},x\_0)=\\sum\_{i=1}^NK\_{\\lambda}(x\_0,x\_i)(y-f\_{\\theta}(x\_i))^2$$
+
+4.  Basis functions: the model *f* is a linear expansion of basis functions
+    $$f\_{\\theta}(x)=\\sum\_{m=1}^M\\theta\_mh\_m(x)$$
+     The term linear refers to the action of parameter *θ*.
+
+5.  <span style="color:red"> Didn't understand the 2nd paragraph on Page36, reread it after reading Ch5. Spline basis has knots. In general, we would like the data to dictate them as well but that will lead to a hard nonlinear problem. </span>
+
+6.  All the above models have a smoothing or complexity parameter: The multiplier of the penalty term; the width of the kernel; the number of basis functions. We cannot use residual sum-of-squares on the training data to determine these parameters since it will always pick the interpolation fits hence zero residuals.
+
+7.  As the model complexity increases, the variance tends to be increase and bias decreases. k-nearest neighbor as k increase, variance decrease and squared bias increases.
+
+8.  Figure 2.11 shows the typical behavior of test error and training error: as model complexity increase, the training error would decrease since the model adapts itself too closely to the training data(overfitting) and will not generalize well(large test error).
