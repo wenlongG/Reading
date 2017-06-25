@@ -174,7 +174,7 @@ Didn't understand the 2nd paragraph on Page36, reread it after reading Ch5. Spli
 
 5. Rank deficiency can also occur in signal and image analysis, where $p>N$. In this case, the features are typically reduced by filtering or controlled by regularization.
 
-\subsection*{6/25/2016 (Ch3 P46-)}
+\subsection*{6/25/2016 (Ch3 P46-51)}
 
 1.$$Var(\hat{\beta})=(X^TX)^{-1}\sigma^2$$
 To  draw inference about the parameters and the  model, need additional Gaussian assumption
@@ -182,6 +182,9 @@ $$\hat{\beta} \sim N(\beta,(X^TX)^{-1}\sigma^2 )$$
 $$(N-p-1)\hat(\sigma^2) \sim \sigma^2\chi^2_{N-p-1}$$
 $\hat{\beta}$ and $\hat{\sigma}^2$ are statistically independent.
 
+2. Equation 3.13, the F statistics measures the changes in residual sum-of-squares per additional parameter in the bigger model, and it is normalized by an estimate of $\sigma^2$. The F statistics for dropping a single coefficient from a model is equal to the square of the corresponding z-score(3.12), since $t_{\nu}^2=F_{1,\nu}$
 
+3. Even if the Gaussian error assumption not hold, the CI will be approximately correct with its coverage approaching $1-2\alpha$ as sample size $N \rightarrow \infty$.
 
+4. calculate z-score for all $\hat{\beta}$'s, a z-score greater than 2 in absolute value is approximately significant at the $5\%$ level.
 \end{document}
