@@ -65,7 +65,7 @@ Ch2
 
 6.  The principle of MLE assumes that the most reasonable values for *θ* are those for which the probability of the observed sample is largest.
 
-6/22/2017
+6/22/2017(Ch2 P32-P34)
 
 1.  need Approaches to make efficient use of structured data. There are infinitely many solutions for $\\hat{f}$, so we impose restritions on eligible solutions.
 
@@ -77,7 +77,7 @@ Ch2
 
 5.  <span style="color:red"> why called adaptively chosen basis function methods in the last and second last paragraph of page 36? </span>
 
-6/23/2017
+6/23/2017(Ch2 P34-P38)
 
 1.  Roughness penalty controls the second derivative of *f*, to get a smooth solution. Penalized least-sqaure criterion
     $$PRSS(f;\\lambda)= \\sum\_{i=1}^N(y\_i -f(x\_i))^2 + \\lambda\\int\[f''(x)\]^2dx$$
@@ -99,3 +99,24 @@ Ch2
 7.  As the model complexity increases, the variance tends to be increase and bias decreases. k-nearest neighbor as k increase, variance decrease and squared bias increases.
 
 8.  Figure 2.11 shows the typical behavior of test error and training error: as model complexity increase, the training error would decrease since the model adapts itself too closely to the training data(overfitting) and will not generalize well(large test error).
+
+6/24/2017(Ch3 P43-P46,Notes made up on 6/25)
+
+1.  Linear model assumes that the regression function *E*(*Y*|*X*) is linear <span style="color:red"> in X not in *β*! </span>. Linear models can be applied to transformations(like the basis) of the input, which considerably expand their scope.
+
+2.  Even if the *x*<sub>*i*</sub> were not drawn randomly, the least square criterion is still valid if the *y*<sub>*i*</sub>'s are conditionally independent given the input *x*<sub>*i*</sub>.<span style="color:red"> (Did not assume normality in LSE, right?)</span>
+
+3.  The estimate $\\hat{y}$ is the orthogonal projection of y onto the subspace spanned by x, and residual vector $y-\\hat{y}$ is orthogonal to this subspace.
+
+4.  If X is not full rank,*X*<sup>*T*</sup>*X* is singular and the least square coefficients $\\hat{\\beta}$ are not uniquely defined. However, the fitted values $\\hat{y}$ are still the projection of y onto the column space of X; there is just more than one way to express that projection in terms of X.
+
+5.  Rank deficiency can also occur in signal and image analysis, where *p* &gt; *N*. In this case, the features are typically reduced by filtering or controlled by regularization.
+
+6/25/2016 (Ch3 P46-)
+
+1.
+$$Var(\\hat{\\beta})=(X^TX)^{-1}\\sigma^2$$
+ To draw inference about the parameters and the model, need additional Gaussian assumption
+$$\\hat{\\beta} \\sim N(\\beta,(X^TX)^{-1}\\sigma^2 )$$
+$$(N-p-1)\\hat(\\sigma^2) \\sim \\sigma^2\\chi^2\_{N-p-1}$$
+ $\\hat{\\beta}$ and $\\hat{\\sigma}^2$ are statistically independent.
