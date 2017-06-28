@@ -194,8 +194,19 @@ $\hat{\beta}$ and $\hat{\sigma}^2$ are statistically independent.
 
 2. The multiple regression coefficient $\hat{\beta}_j$ represents the additional contribution of $x_j$ on y, after $x_j$ has been adjusted for $x_0,x_1,\ldots,x_{j-1},x_{j+1},\ldots,x_p$.
 
-3. Alforithm 3.1 Page 54 is known as Gram-Schmidt procedure for multiple regression.
+3. For univariate model, $\hat{\beta}=\frac{<x,y>}{<x,x>}$. Suppose that columns of X are orthogonal, them the multiple least square estimates $\beta_j=\frac{<x_j,y>}{<x_j,x_j>}$ the univariate estimates, i.e., when inputs are orthogonal, they have no effect on each other's parameter estimates. Algorithm 3.1 Page 54 is known as Gram-Schmidt procedure for multiple regression(orthogonalized the inputs X):
+\begin{itemize}
+	\item $z_0 =\textbf{1}$, regress $x_1$ on $z_0$, $x_1=z_0\gamma_{01} + e$, get residual $z_1=x_1-z_0\hat{\gamma}_{01}$, regress y on $z_1$ get $\hat{\beta}_1$
+	\item regress $x_2$ on $z_1,z_0$, get residual $z_2=x_2-z_1\hat{\gamma}_{12}-z_0\hat{\gamma}_{02}$, regress y on $z_2$ get $\hat{\beta}_2$
+	\item $\ldots$
+\end{itemize}
 
-4. QR decomposition represents a convenient orthogonal basis for the column space of X. {\color{red} equation (3.32) (3.33)?}
+
+\subsection*{6/27/2016 (Ch3 P55-P58)}
+
+1. We can represent step 2 of Algorithm 3.1 in matrix form: $X=Z\Gamma$, where z has columns $z_j$ in order and $\Gamma$ is the upper triangular matrix with entries$\hat{\gamma}_{k,j}$. Diagonal matrix D with j-th diagonal entry $D_{jj}=||z_j||^2$ to standardize Z in $X=ZD^{-1}D\Gamma=QR$.$Q^TQ=I$. QR decomposition represents a convenient orthogonal basis for the column space of X. Easy to get(with R being upper triangular matrix).
+$$\hat{\beta}= R^{-1}Q^Ty; \hat{y}=QQ^Ty$$
+
+2. For multivariate output Y, $RSS(B)=tr((Y-XB)^T(Y-XB))$, $\hat{B}$ same format of LSE as for univariate y \textcolor{red}{even if $cov(\epsilon)=\Sigma$, why? (not the case if $\Sigma_i$ differ for observations i)}.
 
 \end{document}
