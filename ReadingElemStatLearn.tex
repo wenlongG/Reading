@@ -202,11 +202,23 @@ $\hat{\beta}$ and $\hat{\sigma}^2$ are statistically independent.
 \end{itemize}
 
 
-\subsection*{6/27/2016 (Ch3 P55-P58)}
+\subsection*{6/27/2016 (Ch3 P55-P57)}
 
 1. We can represent step 2 of Algorithm 3.1 in matrix form: $X=Z\Gamma$, where z has columns $z_j$ in order and $\Gamma$ is the upper triangular matrix with entries$\hat{\gamma}_{k,j}$. Diagonal matrix D with j-th diagonal entry $D_{jj}=||z_j||^2$ to standardize Z in $X=ZD^{-1}D\Gamma=QR$.$Q^TQ=I$. QR decomposition represents a convenient orthogonal basis for the column space of X. Easy to get(with R being upper triangular matrix).
 $$\hat{\beta}= R^{-1}Q^Ty; \hat{y}=QQ^Ty$$
 
 2. For multivariate output Y, $RSS(B)=tr((Y-XB)^T(Y-XB))$, $\hat{B}$ same format of LSE as for univariate y \textcolor{red}{even if $cov(\epsilon)=\Sigma$, why? (not the case if $\Sigma_i$ differ for observations i)}.
+
+\subsection*{6/28/2016 (Ch3 P57-P62)}
+
+1. Backward selection can only be used when $N>p$, while forward selection can always be used. Hybrid stepwise selection consider both forward and backward moves at each step, and select the "best" of the two.
+
+2.  forward-stagewise regression starts with an intercept equals to $\overline{y}$ and centered predictors with coefficients initially at 0. At each step, it identifies the variable most correlated with the residual and then compute the SLR coefficient on the chosen variable and adds it to the current coefficient for that variable. It will continue until none of variables have correlation with residuals. Slow but competitive for high-dim problems.
+
+3. description of 10 fold cross validation 3.3.4 Page61 1st paragraph. 
+
+4. Model selection is a discrete process and often exhibit high variance. Shrinkage methods are more continuous and don't suffer as much from high variability.
+
+
 
 \end{document}
