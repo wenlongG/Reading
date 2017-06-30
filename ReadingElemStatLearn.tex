@@ -219,6 +219,12 @@ $$\hat{\beta}= R^{-1}Q^Ty; \hat{y}=QQ^Ty$$
 
 4. Model selection is a discrete process and often exhibit high variance. Shrinkage methods are more continuous and don't suffer as much from high variability.
 
+\subsection*{6/29/2016 (Ch3 P63-P67)}
 
+1. The main motivation for ridge regression when first introduced is to make $X^TX$ nonsingular by adding a $\lambdaI$. In the case of orthogonal inputs X, the ridge regression estimate $\beta_{ridge}=\hat{\beta}/(1+\lambda)$. The ridge estimate is the mode or mean of the posterior distribution of $\beta$, with $\lambda=\sigma^2/\tau^2$, prior $\beta \sim N(0,\tau^2)$.
+
+2. \textcolor{(red)}{What conclusion can be draw fron the profile plot of ridge regression Page64 Figure 3.8}
+
+3. Page 66 connect ridge regression,SVD, LSE and principle component, very helpful!!! Ridge regression shrinks the coordinates by factor of $d^2_j/(d^2_j+\lambda)$, which means a greater shrinkage is applied to the coordinate of basis vectors with smaller $d^2_j$, which corresponding to smallest principle component direction, i.e., the direction in the column space of X having smallest variance. The small singular value corresponding to the direction in the column space of X having smallest variance.
 
 \end{document}
