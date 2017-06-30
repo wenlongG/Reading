@@ -221,10 +221,23 @@ $$\hat{\beta}= R^{-1}Q^Ty; \hat{y}=QQ^Ty$$
 
 \subsection*{6/29/2016 (Ch3 P63-P67)}
 
-1. The main motivation for ridge regression when first introduced is to make $X^TX$ nonsingular by adding a $\lambdaI$. In the case of orthogonal inputs X, the ridge regression estimate $\beta_{ridge}=\hat{\beta}/(1+\lambda)$. The ridge estimate is the mode or mean of the posterior distribution of $\beta$, with $\lambda=\sigma^2/\tau^2$, prior $\beta \sim N(0,\tau^2)$.
+1. The main motivation for ridge regression when first introduced is to make $X^TX$ nonsingular by adding a $\lambda$. In the case of orthogonal inputs X, the ridge regression estimate $\beta_{ridge}=\hat{\beta}/(1+\lambda)$. The ridge estimate is the mode or mean of the posterior distribution of $\beta$, with $\lambda=\sigma^2/\tau^2$, prior $\beta \sim N(0,\tau^2)$.
 
-2. \textcolor{(red)}{What conclusion can be draw fron the profile plot of ridge regression Page64 Figure 3.8}
+2. \textcolor{red}{What conclusion can be draw from the profile plot of ridge regression Page64 Figure 3.8}
 
 3. Page 66 connect ridge regression,SVD, LSE and principle component, very helpful!!! Ridge regression shrinks the coordinates by factor of $d^2_j/(d^2_j+\lambda)$, which means a greater shrinkage is applied to the coordinate of basis vectors with smaller $d^2_j$, which corresponding to smallest principle component direction, i.e., the direction in the column space of X having smallest variance. The small singular value corresponding to the direction in the column space of X having smallest variance.
+
+\subsection*{6/30/2016 (Ch3 P67-P70)}
+
+1. The implicit assumption for PCA or ridge regression is that the response will tend to vary most in the directions of high variance of the input, which is often reasonable since predictors are often chosen for study because they vary with the response variable.
+
+2. effective df of ridge reg: $df(\lambda)=\sum_{j=1}^{p}\frac{d^2_j}{d^2_j+\lambda}$. $df(\lambda)=p$ when $\lambda=0$,$df(\lambda)=0$ when $\lambda=\infty$
+
+3. $L_2$ ridge penalty $\sum_{1}^{p}\beta^2_j$ is replaced by $L_1$ penalty $\sum_{1}^{p}|\beta_j|$, which makes the lasso solution nonlinear in $y$ and having no explicit expression.
+
+4. The standardized tuning parameter $s=t/\sum_{1}^{p}|\hat{\beta}^{LS}_j|$ indicate the percentage that LSE coefficients are shrunk on average. At $s=1$, lasso gives LSE; and the estimates decrease to 0 as $s \rightarrow 0$.
+
+5. profile plot for Lasso is piece-wise linear(less computation) and it hits 0 while ridge does not.
+
 
 \end{document}
