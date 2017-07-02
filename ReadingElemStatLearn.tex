@@ -251,5 +251,17 @@ q=1 corresponding to lasso with double exponential or Laplace (log)prior for $\b
 
 4. q=1(lasso) is the smallest q such that the constraint region is convex.
 
-5. with q>1,$|\beta_j|^q$ is differentiable at 0(no corner on the constraint region), so does not share the ability of lasso for setting coefficients exactly to 0. Partially for this reason as well as for computational tractability, elastic-net is proposed, a compromise between lasso and ridge.
+5. with $q>1$,$|\beta_j|^q$ is differentiable at 0(no corner on the constraint region), so does not share the ability of lasso for setting coefficients exactly to 0. Partially for this reason as well as for computational tractability, elastic-net is proposed, a compromise between lasso and ridge.
+
+\subsection*{7/2/2017 (Ch3 P73-P79)}
+
+1. LAR "least angle regression" provides an extremely efficient algorithm for computing the entire lasso path as in Figure 3.10.
+
+2. By construction, the coefficients in LAR change in a piecewise linear fashion. Using knowledge of the covariance of the predictors and the piecewise linearity of the algorithm 3.2(LARS) on Page74, we can figure out the exact step length(like the joint point in Figure 3.14). "Least Angel Regression and Shrinkage"
+
+3. Algorithm 3.2a(LAR) gives the entire lasso path.
+
+4. In classical statistics, the number of linearly independent parameters is what is meant by "degree of freedom". A more general definition of the effective degrees of freedom of an adaptively fitted model:$$df(\hat{y})=\frac{1}{\sigma^2}\sum_{i=1}^{N}cov(\hat{y}_i,y_i)$$
+Intuitively, the harder that we fit the data, the larger this covariance and hence $df(\hat{y})$.
+
 \end{document}
