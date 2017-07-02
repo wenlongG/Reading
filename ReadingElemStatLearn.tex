@@ -239,5 +239,17 @@ $$\hat{\beta}= R^{-1}Q^Ty; \hat{y}=QQ^Ty$$
 
 5. profile plot for Lasso is piece-wise linear(less computation) and it hits 0 while ridge does not.
 
+\subsection*{7/1/2017 (Ch3 P69-P73)}
 
+1. Lasso is "soft-thresholding"; Best-subset selection is a form of "hard-thresholding".
+
+2. Figures on Page 71 is useful!
+
+3. We can generalize ridge regression and the lasso and view then as Bayes estimates.
+$$\tilde{\beta}=argmin{\sum_{i=1}^{N}(y_i-\beta_0-\sum_{j=1}^{p}x_{ij}\beta_j)^2 +\lambda\sum_{j=1}^{p}|\beta_j|^q}$$
+q=1 corresponding to lasso with double exponential or Laplace (log)prior for $\beta_j$ with density$(1/2\tau exp(-|\beta|/\tau))$ and $\tau=1/\lambda$; q=2 to ridge regression. Ridge regression is the posterior mean but lasso and best-subset are not.
+
+4. q=1(lasso) is the smallest q such that the constraint region is convex.
+
+5. with q>1,$|\beta_j|^q$ is differentiable at 0(no corner on the constraint region), so does not share the ability of lasso for setting coefficients exactly to 0. Partially for this reason as well as for computational tractability, elastic-net is proposed, a compromise between lasso and ridge.
 \end{document}
