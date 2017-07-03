@@ -264,4 +264,14 @@ q=1 corresponding to lasso with double exponential or Laplace (log)prior for $\b
 4. In classical statistics, the number of linearly independent parameters is what is meant by "degree of freedom". A more general definition of the effective degrees of freedom of an adaptively fitted model:$$df(\hat{y})=\frac{1}{\sigma^2}\sum_{i=1}^{N}cov(\hat{y}_i,y_i)$$
 Intuitively, the harder that we fit the data, the larger this covariance and hence $df(\hat{y})$.
 
+\subsection*{7/2/2017 (Ch3 P79-P83)}
+
+1. Principle components regression(PCR) forms orthogonal inputs $z_m=Xv_m$ for $m=1,\ldots,M \le p$. if M=p, we will get back the usual LSE since the columns of $Z=UD$ span the column space of X. If $M < p$ we get reduce regression like ridge: ridge regression shrinks the coef of the PCs, shrinking more depend on the size of the corresponding eigenvalues; principle components regression discards the $p-M$ smallest eigenvalue components.
+
+2. Partial least squares(PLS) also construct a set of linear combination of the inputs but also uses $y$(unlike PCR), produces a sequence of derived, orthogonal inputs as in Algorithm 3.3. The PLS seeks directions that have high variance AND high correlation with the response, while PCR only on high variance. 
+
+3. \textcolor{red}{ what is the rationals behind construction as $z_m=\sum_{j=1}^{p}\psi_{mj}x_j^{(m-1)} $ in PLS, for orthogonality?}
+
+4. PLS, PCR and ridge regression behave similarly, ridge regression is preferred because it shrinks smoothly. Lasso fall between ridge and best subset, and enjoys some properties of each.
+
 \end{document}
