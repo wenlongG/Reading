@@ -264,7 +264,7 @@ q=1 corresponding to lasso with double exponential or Laplace (log)prior for $\b
 4. In classical statistics, the number of linearly independent parameters is what is meant by "degree of freedom". A more general definition of the effective degrees of freedom of an adaptively fitted model:$$df(\hat{y})=\frac{1}{\sigma^2}\sum_{i=1}^{N}cov(\hat{y}_i,y_i)$$
 Intuitively, the harder that we fit the data, the larger this covariance and hence $df(\hat{y})$.
 
-\subsection*{7/2/2017 (Ch3 P79-P83)}
+\subsection*{7/3/2017 (Ch3 P79-P83)}
 
 1. Principle components regression(PCR) forms orthogonal inputs $z_m=Xv_m$ for $m=1,\ldots,M \le p$. if M=p, we will get back the usual LSE since the columns of $Z=UD$ span the column space of X. If $M < p$ we get reduce regression like ridge: ridge regression shrinks the coef of the PCs, shrinking more depend on the size of the corresponding eigenvalues; principle components regression discards the $p-M$ smallest eigenvalue components.
 
@@ -274,4 +274,22 @@ Intuitively, the harder that we fit the data, the larger this covariance and hen
 
 4. PLS, PCR and ridge regression behave similarly, ridge regression is preferred because it shrinks smoothly. Lasso fall between ridge and best subset, and enjoys some properties of each.
 
+\subsection*{7/4/2017 (Ch3 P86-P93)}
+
+1. Incremental Forward Stage-wise regression generates a coefficient profile by repeatedly updating(by a small amount $\epsilon$) the coefficient of the variable most correlated with the current residuals. Letting $\epsilon \rightarrow 0$ could give identical lasso path. \textcolor{red}{$\delta_j=<x_j,r>$(the least squares coefficients of the residual on jth predictor!!)}
+
+2. The grouped lasso is to shrink and select the members of a group together by minimizing the convex criterion:$$\displaystyle{\min_{\beta \in R^p}}\Bigg(||y-\beta_01-\sum_{l=1}^{L}X_l\beta_l||_2^2 + \lambda\sum_{l=1}^{L}\sqrt{p_l}||\beta_l||_2\Bigg)$$
+
+3. Caomputation of lasso via the LAR algorithm has the same order of computation as a least square fit.
+
+
+\subsection*{7/5/2017 (Ch3 P101-P)}
+
+1. The regression approach is a member of a class of methods that model discriminant functions $\delta_k(x)$ for each class, and then classify x to the class with the largest value for its discriminant function. To get linear boundaries, all we need is that some monotone transformation of $\delta_k$ be linear, like logit transformation for logistic regression, where the decision boundary is the set of points for which the log-odds are zero.
+
+2. Figure 4.1 shows the scenario that linear functions in the augmented space map to the quadratic function in the original space, when using with basis functions.
+
+3. \textcolor{red}{why $\sum_{k \in \mathcal{G}}^{}\hat{f}_k(x)=1$ as long as there is intercept?Page104 2nd paragraph. $\hat{f}_k$ can be negative or larger than 1 as a consequence of the rigid linear regression}
+
+4. \textcolor{red}{Page 104 Did not really understand after paragraph 2...}
 \end{document}
