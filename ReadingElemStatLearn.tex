@@ -283,7 +283,7 @@ Intuitively, the harder that we fit the data, the larger this covariance and hen
 3. Caomputation of lasso via the LAR algorithm has the same order of computation as a least square fit.
 
 
-\subsection*{7/5/2017 (Ch3 P101-P)}
+\subsection*{7/5/2017 (Ch3 P101-P105)}
 
 1. The regression approach is a member of a class of methods that model discriminant functions $\delta_k(x)$ for each class, and then classify x to the class with the largest value for its discriminant function. To get linear boundaries, all we need is that some monotone transformation of $\delta_k$ be linear, like logit transformation for logistic regression, where the decision boundary is the set of points for which the log-odds are zero.
 
@@ -291,5 +291,12 @@ Intuitively, the harder that we fit the data, the larger this covariance and hen
 
 3. \textcolor{red}{why $\sum_{k \in \mathcal{G}}^{}\hat{f}_k(x)=1$ as long as there is intercept?Page104 2nd paragraph. $\hat{f}_k$ can be negative or larger than 1 as a consequence of the rigid linear regression}
 
-4. \textcolor{red}{Page 104 Did not really understand after paragraph 2...}
+4. \textcolor{red}{Page 104 Did not really understand after paragraph 2... till end of page 106 }
+
+\subsection*{7/5/2017 (Ch3 P104-P109)}
+
+1. main information extracted from 104-106: linear regression model for indicator could mask some categories like in Figure 4.2, while LDA works better.  \textcolor{red}{Did not understand Figure 4.3}, but the main idea is that for $K \ge 3$, using polynomials of order $K-1$ is good.
+
+2. LDA arises in the special case when we assume that the classes have a common covariance matrix. Checking the log-ratio of two classes is linear in x so that the class boundary is linear.
+
 \end{document}
