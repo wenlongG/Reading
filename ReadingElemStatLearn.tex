@@ -6,6 +6,7 @@
 
 \usepackage[margin = 1in]{geometry}
 \usepackage{color}
+\usepackage{amsmath}
 \begin{document}
 
 \section*{Chapter 1} %the star prohibited the automatic numbering
@@ -293,10 +294,25 @@ Intuitively, the harder that we fit the data, the larger this covariance and hen
 
 4. \textcolor{red}{Page 104 Did not really understand after paragraph 2... till end of page 106 }
 
-\subsection*{7/5/2017 (Ch3 P104-P109)}
+\subsection*{7/6/2017 (Ch3 P104-P109)}
 
 1. main information extracted from 104-106: linear regression model for indicator could mask some categories like in Figure 4.2, while LDA works better.  \textcolor{red}{Did not understand Figure 4.3}, but the main idea is that for $K \ge 3$, using polynomials of order $K-1$ is good.
 
 2. LDA arises in the special case when we assume that the classes have a common covariance matrix. Checking the log-ratio of two classes is linear in x so that the class boundary is linear.
 
+\subsection*{7/7/2017 (Machine Learning - A probability perspective 4.2-4.2.2}
+
+1. Gaussian discriminant analysis: define the class conditional density using multivariate Gaussian. $$p(x|y=c,\theta)=N(x|\mu_c,\Sigma_c)$$. If $\Sigma_c$ is diagonal, this is equivalent to Naive Bayes.
+
+2. Naive Bayes classifier: Assume the features are conditionally independent given the class label. $p(x|y=c,\theta)=\prod_{j=1}^{D}p(x_j|y=c,\theta_{jc})$, D is the number of features. work well even if independent assumption not valid. Simple model with only $O(C*D)$ parameters hence relatively immune to overfitting.
+
+3. generative classifier(Equation 2.13) specify how to generate the data using the class prior $p(y=c)$, class conditional density $p(x|y=c)$.
+$$p(y=c|x)=\frac{p(y=c)p(x|y=c)}{\sum_{c'}^{}p(y=c')p(x|y=c')}$$
+
+4. $\hat{y}(x)=\underset{c}{\mathrm{argmax}} p(y=c|x)= \underset{c}{\mathrm{argmax}} logp(y=c) + logp(x|y=c) $ The later part measures the distance from x to the center of each class, $\mu_c$, using Mahalanobis distance. For a uniform prior, $\hat{y}=\underset{c}{\mathrm{argmin}} (x-\mu_c)^T\Sigma_c^{-1}(x-\mu_c))$.
+
+5. quadratic discriminant analysis is a typical Gaussian discriminant analysis.
+
+6. linear discriminant analysis is for $\Sigma_c=\Sigma$, the covariance matrices are tied or shared across classes. Quadratic part canceled out between numerator and denominator. Taking log will give a linear function of x, the decision boundary is linear. $p(y=c|x)$ can be written as a softmax function: $\frac{e^{\eta_c}}{\sum_{c'=1}^{C}e^{\eta_{c'}}}$. Devide $\eta_c$ by Temperature T, at low T, the distribution stay in the most probable state, while at high T, it visits all states uniformly(Figure 4.4), like Boltzmann distribution.
+	
 \end{document}
