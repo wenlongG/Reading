@@ -284,7 +284,7 @@ Intuitively, the harder that we fit the data, the larger this covariance and hen
 3. Caomputation of lasso via the LAR algorithm has the same order of computation as a least square fit.
 
 
-\subsection*{7/5/2017 (Ch3 P101-P105)}
+\subsection*{7/5/2017 (Ch4 P101-P105)}
 
 1. The regression approach is a member of a class of methods that model discriminant functions $\delta_k(x)$ for each class, and then classify x to the class with the largest value for its discriminant function. To get linear boundaries, all we need is that some monotone transformation of $\delta_k$ be linear, like logit transformation for logistic regression, where the decision boundary is the set of points for which the log-odds are zero.
 
@@ -294,7 +294,7 @@ Intuitively, the harder that we fit the data, the larger this covariance and hen
 
 4. \textcolor{red}{Page 104 Did not really understand after paragraph 2... till end of page 106 }
 
-\subsection*{7/6/2017 (Ch3 P104-P109)}
+\subsection*{7/6/2017 (Ch4 P104-P109)}
 
 1. main information extracted from 104-106: linear regression model for indicator could mask some categories like in Figure 4.2, while LDA works better.  \textcolor{red}{Did not understand Figure 4.3}, but the main idea is that for $K \ge 3$, using polynomials of order $K-1$ is good.
 
@@ -315,4 +315,29 @@ $$p(y=c|x)=\frac{p(y=c)p(x|y=c)}{\sum_{c'}^{}p(y=c')p(x|y=c')}$$
 
 6. linear discriminant analysis is for $\Sigma_c=\Sigma$, the covariance matrices are tied or shared across classes. Quadratic part canceled out between numerator and denominator. Taking log will give a linear function of x, the decision boundary is linear. $p(y=c|x)$ can be written as a softmax function: $\frac{e^{\eta_c}}{\sum_{c'=1}^{C}e^{\eta_{c'}}}$. Devide $\eta_c$ by Temperature T, at low T, the distribution stay in the most probable state, while at high T, it visits all states uniformly(Figure 4.4), like Boltzmann distribution.
 	
+\subsection*{7/9/2017 (Machine Learning - A probability perspective 4.2.3}
+
+1. \textcolor{red}{Did not understand the Figure 4.6 on Page 105, 2nd paragraph on Page 106.}
+
+2. (Element of Statistical Learning Ch4 P109) In practice we don't know the parameters of the Gaussian distributions, and will need to estimate them using our training data.
+
+3. The linear discriminant functions (quadratic part $x^T\Sigma^{-1}x$ was canceled)
+$$\delta_k(x)=x^T\Sigma^{-1}\mu_k-\frac{1}{2}\mu^T_k\Sigma^{-1}\mu_k + log\pi_k$$
+	
+\subsection*{7/10/2017 Ch4 P109- P113 }
+
+1. There is simple correspondence between LDA and classification by LS: the coefficient vector from least squares is proportional to the LDA direction, unless N1=N2, the intercepts are different and hence the resulting decision rules are different.
+
+2. With more than 2 classes, LDA is different with linear regression of class indicator matrix and it avoids masking problem as in Figure 4.2 P105.
+
+3. quadratic discriminant functions(QDA): 
+$$\delta_k(x)=-\frac{1}{2}|\Sigma_k| - \frac{1}{2}(x-\mu_k)^T\Sigma^{-1}_k(x-\mu_k) +log\pi_k$$
+The decision boundary is described by a quadratic equation${x:\delta_k(x)=\delta_l(x)}$
+
+4. For LDA, there seems $(K-1)\times(p-1)$ parameters. In QDA, there will be $(K-1)\times{p(p+3)/2+1}$ parameters.
+
+5. we should always have LDA and QDA available as good track record, because the data can only support simple decision boundaries such as linear or quadratic and the estimates provided via the Gaussian models are stable.
+
+6. Regularized Discriminant Analysis allows one to shrink the separate covariance of QDA towards a common covariances as in LDA. The methods are similar to ridge regression. $\hat{\Sigma}_k(\alpha)=\alpha\hat{\Sigma}_k + (1-\alpha)\hat{\Sigma}$ where $\hat{\Sigma}$ is the covariance matrix used in LDA and $\alpha$ can be chosen by cross-validation.
+
 \end{document}
