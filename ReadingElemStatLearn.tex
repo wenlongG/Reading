@@ -340,4 +340,17 @@ The decision boundary is described by a quadratic equation${x:\delta_k(x)=\delta
 
 6. Regularized Discriminant Analysis allows one to shrink the separate covariance of QDA towards a common covariances as in LDA. The methods are similar to ridge regression. $\hat{\Sigma}_k(\alpha)=\alpha\hat{\Sigma}_k + (1-\alpha)\hat{\Sigma}$ where $\hat{\Sigma}$ is the covariance matrix used in LDA and $\alpha$ can be chosen by cross-validation.
 
+\subsection*{7/12/2017 Ch4 P113- P11 }
+
+1. In light of = based on
+
+2. Computation of QDA is simplified by diagonalizing of $\Sigma_k$. Eigen-decompostion $\Sigma_k=U_kD_kU^T_k$, then the ingredients for $\delta_k$ are 
+\begin{itemize}
+	\item $(x-\hat{\mu_k})^T\hat{\Sigma}^{-1}(x-\hat{\mu_k})=[U^T_k(x-\hat{\mu_k})^T]D_k^{-1}[U^T_k(x-\hat{\mu_k})]$
+	\item $log|\hat{\Sigma}_k|=\sum_{l}log d_{kl}$
+\end{itemize}
+
+3. For LDA, the new $X^*=D^{-1/2}U^TX$ so that $\hat{\Sigma}=UDU^T$.
+
+4. popularity of LDA partially because it allows to view informative low-dim projection of the data. The K-centroids in p-dimensional input space lies in an affine subspace of dimension $\le K-1$.
 \end{document}
