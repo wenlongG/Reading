@@ -340,7 +340,7 @@ The decision boundary is described by a quadratic equation${x:\delta_k(x)=\delta
 
 6. Regularized Discriminant Analysis allows one to shrink the separate covariance of QDA towards a common covariances as in LDA. The methods are similar to ridge regression. $\hat{\Sigma}_k(\alpha)=\alpha\hat{\Sigma}_k + (1-\alpha)\hat{\Sigma}$ where $\hat{\Sigma}$ is the covariance matrix used in LDA and $\alpha$ can be chosen by cross-validation.
 
-\subsection*{7/12/2017 Ch4 P113- P11 }
+\subsection*{7/12/2017 Ch4 P113- P113 }
 
 1. In light of = based on
 
@@ -353,4 +353,44 @@ The decision boundary is described by a quadratic equation${x:\delta_k(x)=\delta
 3. For LDA, the new $X^*=D^{-1/2}U^TX$ so that $\hat{\Sigma}=UDU^T$.
 
 4. popularity of LDA partially because it allows to view informative low-dim projection of the data. The K-centroids in p-dimensional input space lies in an affine subspace of dimension $\le K-1$.
+
+\subsection*{7/17/2017 Ch4 P113- P119 }
+
+1. \textcolor{red}{Last paragraph P113, how to understand "in locating the closest centroid, we can ignore distances orthogonal to this subspace, since they will contribute equally to each class."}
+
+2. If class K=3, this allows us to view the data in a 2D plot; if $K > 3$, then we ask for a $L < K-1$ dimensional subspace optimal for LDA, where Fisher defined optimal to mean that the projected centroids were spread as much as possible in terms of variance(this amounts to finding principle component subspace of the centroids, maximizing the between class variance).
+
+3. \textcolor{red}{how to get $B^*$ as the covariance matrix of $M^*= MW^{-1/2}$? i.e., the between class covariance. And why $v_l=W^{-1/2}v_l^*$? the l-th discriminant variable is $Z_l=v_l^TX$}
+
+Between class variance is the variance of the class means of Z, and the within class variance is the pooled variance about the means. From Wikipedia, $$\Sigma_b = \frac{1}{C} \sum_{i=1}^C (\mu_i-\mu) (\mu_i-\mu)^T$$.The within-class variance is defined as $$\hat{\Sigma}=\sum_{k=1}^{K}\sum_{g_i=k}(x_i-\hat{\mu_k})(x_i-\hat{\mu_k})^T/(N-K)$$.
+
+4. Fisher got the same decomposition by posing the problem: find the linear combination $Z=a^TX$ such that the between-class variance is maximized relative to the within-class variance. It amounts to maximizing the Rayleigh quotient,
+\[ \displaystyle{\max_{a}}\frac{a^TBa}{a^TWa}
+\]
+or equivalently, 
+\[ \displaystyle{\max_{a}}a^TBa \hspace{3mm}\text{s.t.} \hspace{3mm} a^TWa=1
+\]
+The optimal $a_1=v_1$ as defined above and next direction $a_2=v_2$, $a_l$ are referred to as discriminant coordinates or canonical variates
+
+5. Summary in the end of Page 116 is very helpful! Since only the relative distances to the centroids count, one can confine the data to the subspace spanned by the centroids $H_{K-1}$ and make distance comparison there; The subspace can be further decomposed into successively optimal subspaces in term of \textcolor{red}{centroid separation}.
+
+
+\subsection*{7/19/2017 Ch4 P117 - P122 }
+
+1. \textcolor{red}{how to understand the 2nd paragraph of page 117}
+
+2. Fisher's reduced rank LDA amounts to the regression followed by an eigen-decomposition of $\hat{Y}^T\hat{Y}$.
+
+3. In logistic regression,
+$$Pr(G=k|X=x)=\frac{exp(\beta_{k0}+\beta_k^Tx)}{1+\sum_{l=1}^{K-1}exp(\beta_{l0}+\beta_l^Tx)}$$
+$$Pr(G=K|X=x)=\frac{1}{1+\sum_{l=1}^{K-1}exp(\beta_{l0}+\beta_l^Tx)}$$
+So the K-1 log-odds sum to 1.
+
+4. $Pr(G|X)$ follows multinomial distribution, multi-class version of Binomial,  which has pmf $$P(X_1=x_1,X_2=x_2,\ldots,X_k=x_k)=\frac{n!}{x_1!x_2!\ldots x_k!}p_1^{x1}\ldots p_k^{xk}$$
+
+5. Newton Raphson step for MLE can be re-expressed as a weighted least square problem(iteratively re-weighted least squares). R package glmnet can fit very large logistic regression problem efficiently for both large N and p.
+
+6. logistics regression models are used mostly as a data analysis and inference tool, where the goal is to understand the role of input variables.
+
+
 \end{document}
