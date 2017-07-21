@@ -397,7 +397,7 @@ So the K-1 log-odds sum to 1.
 
 \subsection*{7/20/2017 Ch4 P122 - P127}
 
-1. Heart disease example shows that variables, while on it own being significant, in the presence of many correlated variables, could be no longer significant and can even get negative sign. Interpretation of coefficients in logistic regression is every unit of input increases accounts for an increase of exp(coef)*100\% in the response.
+1. Heart disease example shows that variables, while on it own being significant, in the presence of many correlated variables, could be no longer significant and can even get opposite sign. Interpretation of coefficients in logistic regression: every unit of input increases accounts for an increase of exp(coef)*100\% in the response.
 
 2. The connection between MLE of logistic regression and weighted least squares has offered convenience for software implementation to avoid iterative computations and take shortcut to test for inclusion of a term with Rao score test, exclusion of a term with Wald test. Rao's score test is for $H_0: \theta=\theta_0$, same for Wald test.
 
@@ -405,6 +405,17 @@ So the K-1 log-odds sum to 1.
 
 4. Using the same quadratic approximation that were used in Newton algorithm, the penalized logistic regression can be solved by repeated application of weighted lasso algorithm.
 
-5. path algorithm such as LAR for lasso is difficult since the coefficient profiles are piecewise smooth rather than linear. R package glmpath used to generate coefficient path. Coordinate descent methods are also efficient to get profiles. 
+5. Path algorithm such as LAR for lasso is difficult since the coefficient profiles are piecewise smooth rather than linear. R package glmpath used to generate coefficient path. Coordinate descent methods are also efficient to get profiles. 
+
+\subsection*{7/21/2017 Ch4 P127 - P130}
+
+1.logit transformation $log(p)=log(\frac{p}{1-p})$.
+
+2. Writing $P(X,G)=P(X)P(G|X)$, for both logistic and LDA, the$P(G|X)$  has logit-linear form. Logistic regression only fit the P(G|X) by maximizing the conditional log-likelihood, while LDA maximizing the full log-likelihood $P(X,G)=\phi(X;\mu_k,\Sigma)\pi_k$, with $\phi$ being Gaussian density. Standard normal theory makes the parameter estimation more efficient(low variance). With $30\%$ more data, the conditional likelihood(logistic) will do as well.
+
+3. LDA is not robust to gross(very large) outliers. It's generally felt that logistic regression is a safer, more robust than LDA model, relying on less assumption. It's our experience that the models give very similar results even when LDA is used inappropriately with qualitative predictors.
+
+4. \textcolor{red}{why the signed distance from x to L is like (4.40)?}
+
 
 \end{document}
