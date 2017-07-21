@@ -126,7 +126,7 @@ Given $X$, we know $f(X)$, so we also know the distribution of $Y$.
 
 6. The principle of MLE assumes that the most reasonable values for $\theta$ are those for which the probability of the observed sample is largest.
 
-\section*{Chapter 3}
+
 
 \subsection*{6/22/2017(Ch2 P32-P34)}
 
@@ -162,6 +162,8 @@ Didn't understand the 2nd paragraph on Page36, reread it after reading Ch5. Spli
 7. As the model complexity increases, the variance tends to be increase and bias decreases. k-nearest neighbor as k increase, variance decrease and squared bias increases.
 
 8. Figure 2.11 shows the typical behavior of test error and training error: as model complexity increase, the training error would decrease since the model adapts itself too closely to the training data(overfitting) and will not generalize well(large test error).
+
+\section*{Chapter 3}
 
 \subsection*{6/24/2017(Ch3 P43-P46,Notes made up on 6/25)}
 
@@ -283,6 +285,7 @@ Intuitively, the harder that we fit the data, the larger this covariance and hen
 
 3. Caomputation of lasso via the LAR algorithm has the same order of computation as a least square fit.
 
+\section*{Chapter 4}
 
 \subsection*{7/5/2017 (Ch4 P101-P105)}
 
@@ -375,7 +378,7 @@ The optimal $a_1=v_1$ as defined above and next direction $a_2=v_2$, $a_l$ are r
 5. Summary in the end of Page 116 is very helpful! Since only the relative distances to the centroids count, one can confine the data to the subspace spanned by the centroids $H_{K-1}$ and make distance comparison there; The subspace can be further decomposed into successively optimal subspaces in term of \textcolor{red}{centroid separation}.
 
 
-\subsection*{7/19/2017 Ch4 P117 - P122 }
+\subsection*{7/19/2017 Ch4 P117 - P122}
 
 1. \textcolor{red}{how to understand the 2nd paragraph of page 117}
 
@@ -392,5 +395,16 @@ So the K-1 log-odds sum to 1.
 
 6. logistics regression models are used mostly as a data analysis and inference tool, where the goal is to understand the role of input variables.
 
+\subsection*{7/20/2017 Ch4 P122 - P127}
+
+1. Heart disease example shows that variables, while on it own being significant, in the presence of many correlated variables, could be no longer significant and can even get negative sign. Interpretation of coefficients in logistic regression is every unit of input increases accounts for an increase of exp(coef)*100\% in the response.
+
+2. The connection between MLE of logistic regression and weighted least squares has offered convenience for software implementation to avoid iterative computations and take shortcut to test for inclusion of a term with Rao score test, exclusion of a term with Wald test. Rao's score test is for $H_0: \theta=\theta_0$, same for Wald test.
+
+3. The $L_1$ penalty for Lasso can be used for variable selection and shrinkage with any linear regression model. For logistic regression, penalty is on its log-likelihood Equation(4.20).
+
+4. Using the same quadratic approximation that were used in Newton algorithm, the penalized logistic regression can be solved by repeated application of weighted lasso algorithm.
+
+5. path algorithm such as LAR for lasso is difficult since the coefficient profiles are piecewise smooth rather than linear. R package glmpath used to generate coefficient path. Coordinate descent methods are also efficient to get profiles. 
 
 \end{document}
