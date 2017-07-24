@@ -417,5 +417,20 @@ So the K-1 log-odds sum to 1.
 
 4. \textcolor{red}{why the signed distance from x to L is like (4.40)?}
 
+\subsection*{7/24/2017 Ch7 Model Selection P219 - P224} 
+1. Test error, also referred to a generalization error, is the prediction error over an independent test sample. For a given training set $\mathcal{T}$, the test error is 
+$$Err_\mathcal{T}=E[Loss(Y,f(\hat{X}))|\mathcal{T}]$$
+
+2. Training error is the average loss over the training samples $\bar{err}=\frac{1}{N}\sum_{i=1}^{N}L(Y_i, \hat{f}(x))$. Training error consistently decreases with model complexity, typically dropping to 0 if complex enough. As the model gets complex, there is a decrease in bias but an increase in variance.
+
+3. Typical loss function for qualitative or categorical response:
+$$L(G,\hat{G}(X))=I(G\ne \hat{G}(X))$$
+$$L(G,\hat{G}(X))=-2\sum_{k=1}^{K}I(G=k)log\hat{p}_k(X)=-2log\hat{p}_G(X)$$
+-2loglik is sometimes referred to as the deviance. The log-liklihood can be used as a loss function for general response densities. The -2 makes the loglik for Gaussian distribution match squared-error loss.
+
+4. Ch7 describes methods for estimating the expected test error for a model, given tuning parameter $\alpha$, $\hat{f}_{\alpha}(X)$, and finding the $\alpha$ that minimizes error. i.e., model selection\\
+Model assessment: having chosen a final model, estimating its prediction error on new data.
+
+5. The training set is used to fit the models; the validation set is used to estimate the prediction error for model selection; the test set is used for assessment of the generalization error of the final chosen model. A typical split is 50,25,25. Validation step uses analytically methods(AIC, BIC, etc) or efficient sample re-use(cross-validation or bootstrap).
 
 \end{document}
