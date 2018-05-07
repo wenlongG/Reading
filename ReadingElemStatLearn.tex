@@ -8,6 +8,263 @@
 \usepackage{color}
 \usepackage{amsmath}
 \begin{document}
+	
+\section*{An Introduction to Statistical Learning Ch8 Tree}
+\subsection{2/11/2018}
+\begin{itemize}
+	\item The best subset selection, first get best models $M_0,\ldots,M_p$ for 0 to p variables in the model(each need $C_k^p$ models to compare), then use CV to compare $M_0,\ldots,M_p$ using CV test error $C_p$, AIC,BIC or $R^2$.
+	\item In the case of logistic regression, instead of ordering models by RSS, we use the deviance, which is $-2*maxloglik$; the smaller the deviance, the better the fit. 
+	\item The best subset selection cannot be applied with large p, not only out of the computational reason, but also because the larger the search space, the higher the chance to find models that look good on training data, thus lead to overfitting and high variance of the coefficient estimates.
+	\item Forward stepwise selection begins with a model contains no predictors and then adds predictors to the model, one-at-a-time. In particular, at each step that variable that gives the greatest additional improvement to the fit is added to the model. Similarly as in best subset selection, use CV to compare $M_0,\ldots,M_p$. Best subset selection needs to compare $2^p$ models, whereas forward stepwise involves $1+\sum_{k=0}^{p-1}(p-k)=1+p(p+1)/2$ models. Forward stepwise has computational advantage over best subset but not guarantee to find the best possible model.
+	\item Backward selection also search trough $1+p(p+1)/2$ models and not guaranteed to yield the best model. Backward selection requires that $n > p$(so that the full model can be fit). In contrast, forward stepwise selection can be used even when $n<p$ and it can only construct models $M_0,\ldots,M_{n-1}$ since each submodel is fit using least squares, which will not yield a unique solution if $p\ge n$
+	\item Hybrid approach, stepwise selection, in analogy to froward selection but after adding each new variable, it may also remove varaibles that no longer provide an improvement in the model fit. Such an approach attempts to more closely mimic best subset selection while retaining the computational advantage of forward and backward stepwise selection.
+	\item Because the training error rate will decrease as more variables are included in the model but the test error may not, training set RSS or $R^2$ cannot be used to select among a set of models with different numbers of variables. To estimate this test error rate, two common approaches:
+	\begin{itemize}
+		\item indirectly estimate test error by making an adjustment to the training error to account for the bias due to overfitting, $C_p$, AIC, BIC, adjust $R^2$.
+		\item use CV or validation set approach to directly estimate test error.
+	\end{itemize}
+	\item For a least squares model containing d predictors, the Cp estimate of test MSE is computed as \[C_p=\frac{1}{n}(RSS + 2d\hat{\sigma}^2)
+	\]
+	It can be shown that Vp is an unbiased estimate of test MSE if $\hat{\sigma}^2$ is an unbiased estimate of ${\sigma}^2$ (variance of error $\epsilon$). 
+	\item For lease square models, Cp and AIC are proportional to each other P212. BIC statistic generally place a heavier penalty on models with many variables and hence results in the selection of smaller models than using Cp. The adjusted $R^2$ is not as well motivated in statistical theory as AIC, BIC and Cp. 
+	\item Using CV to estimate test error has advantage relative to AIC, BIC, Cp, adjusted R2 in that it makes fewer assumptions about the true underlying model and can be used in a wider range model selection tasks, even in cases where it's hard to pinpoint the model degree freedom or hard to estimate the error variance $\sigma^2$.
+	\item One standard error rule: we first calculate the standard error of the estimated test MSE for each model size and then select the smallest model for which the estimated test error is within one standard error of the lowest point on the curve. (\textcolor{red}{SE of estimated test MSE for each model size???})
+	find $\theta$ such that $CV(\theta) \le CV(\hat{\theta}) + SE(\hat{\theta})$, and $\hat{\theta}=\underset{\theta \in \theta_1,\ldots,\theta_m}{\mathrm{argmin} CV(\theta)}$.
+	\item Ridge Regression: the ridge reg coef est $\hat{\beta}^R$ are the values that minimize
+	\[ \sum_{i=1}^{n}(y_i-\beta_0-\sum_{j=1}^{p}\beta_jx_{ij})^2 +\lambda\sum_{j=1}^{p}\beta_j^2= RSS +\lambda\sum_{j=1}^{p}\beta_j^2
+	\]
+	use CV to get tuning parameter $\lambda$. $l_2$ norm of $\beta$ is defined as $||\beta||_2=\sqrt{\sum_{j=1}^{p}\beta_j^2}$, which measures the distance of $\beta$ from 0. As $\lambda$ increase, the $l_2$ norm of $\hat{\beta}^R$ will always decrease and so will $||\hat{\beta}^R||_2/||\hat{\beta}||_2$
+	\item The LSEs are scale equivalent: multiplying $X_j$ by a constant c simply leads to a scaling of LSEs by a factor of $1/c$. In contrast, the ridge coef can change substantially when multiplying a given predictor by a constant. In other words, $X_j\beta_{j,\lambda}^R$ will depend not only on the value of $\lambda$, but also on the scaling of the j-th predictor, and may even depend on the scaling of other predictors. Therefore, it's best to apply ridge regression after standardizing the predictors, using 
+	\[\bar{x}_{ij}=\frac{x_{ij}}{\sqrt{\frac{1}{n}\sum_{i=1}^{n}(x_{ij}-\bar{x}_j)^2}}
+	\]
+	\item Ridge regression's advantage over least squares is rooted in the bias-variance trade-off. As $\lambda$ increases, the flexibility of the ridge regression fit decreases, leading to decreased variance but increased bias P217. Ridge reg works best in situations where the least squares estimates have high variance(when p is close to n). When $p > n$, the LSE do not have a unique solution, whereas ridge reg can still perform well by trading off a small increase in bias for a larger decrease in variance.
+	\item Ridge regression also has substantial advantages over best subset selection, which requires searching through $2^p$ models. In contrast, for any fixed value of $\lambda$, ridge regression only fits a single model.One can show that the computations required for ridge regression to minimize the penalized equation, simultaneously for all values of $\lambda$, are almost identical to those for fitting a modeling using least squares.
+	\item Lasso overcomes the problem that ridge regression will include all p predictors in the final model(ridge shrinks coef towards 0 but bot set to exactly 0 unless $\lambda=\infty$). The lasso coefficients, $\beta^L_{\lambda}$, minimize the quantity with $l_1$ penalty, which forces some of the coef est to be exactly equal to 0.
+	\[	 \sum_{i=1}^{n}(y_i-\beta_0-\sum_{j=1}^{p}\beta_jx_{ij})^2 +\lambda\sum_{j=1}^{p}|\beta_j|= RSS +\lambda\sum_{j=1}^{p}|\beta_j|
+	\]
+    Therefore, lasso performs variable selection and yields sparse models.
+    \item Another formulation for Ridge regression and Lasso
+    \[	 \displaystyle{\min_{\beta}} (y_i-\beta_0-\sum_{j=1}^{p}\beta_jx_{ij})^2 \textit{   subject to  } \sum_{j=1}^{p}\beta_j^2 \le s
+    \]
+     \[	 \displaystyle{\min_{\beta}} (y_i-\beta_0-\sum_{j=1}^{p}\beta_jx_{ij})^2 \textit{   subject to  } \sum_{j=1}^{p}|\beta_j| \le s
+    \]
+    So, the ridge and lasso est have the smallest RSS out of all points that lie within the circle(p=2, ridge) or diamond(p=2, lasso) within s.
+    \item The LSE is the result of following problem
+    \[ \displaystyle{\min_{\beta}} (y_i-\beta_0-\sum_{j=1}^{p}\beta_jx_{ij})^2 \textit{   subject to  } \sum_{j=1}^{p}I(\beta_j \ne 0) \le s
+    \]
+   It amounts to finding a set of coef est such that RSS is as small as possible, subject to the constraint that no more than s coef can be nonzero. Solving the above formulation requires considering all s from p models containing s predictors.Therefore, we can interpret ridge reg and lasso as computationally feasible alternatives to best subset selection that replace the intractable form of the budget in above formulation with forms that are much easier to solve.
+   \item The lasso leads to feature selection due to the sharp corners of the polyhedron or ploytope P223, and results in models that are easier to interpret.
+   \item Plotting MSE against $R^2$ on training data is a useful way to index models and can be used to compare models with different type of regularization.
+   \item In general, Lasso will perform better in a setting where a relatively small number of predictors have substantial coefficients and the remaining have coef that are very small or that equal to 0. Ridge regression will perform better when the response is a function of many predictors, all with coef of roughly equal size. 
+   \item Consider a special case with n=p and X is an identity matrix, and performing a linear regression without intercept. One can show that the ridge regression est take the form 
+   \[ \hat{\beta}^R_j=y_j/(1+\lambda)
+   \]
+   and lasso est takes the form
+	\begin{equation}
+	\hat{\beta}^L_j =
+	\begin{cases}
+	y_j-\lambda/2 & \text{if} y_j > \lambda/2 \\
+	y_j+\lambda/2 & \text{if} y_j < -\lambda/2 \\
+	0 & \text{if} |y_j|\le \lambda/2
+	\end{cases}
+	\end{equation}
+	In the case of a more general data matrix X, the main ideas still hold approximately: ridge regression more or less shrinks every dimension of the data by the same proportion, whereas the lass more or less shrinks all coefficients toward zero by a similar amount and sufficiently small coef are shrunken all the way to zero.
+	\item Bayesian interpretation for ridge reg and the lasso: Assume that prior for $\beta$, $p(\beta)=\prod_{j=1}^{p}g(\beta_j)$, if g is Gassian distribution with mean 0 and std dev a function of $\lambda$, then it follows that the posterior mode for $\beta$ is given by the ridge reg solution.(and ridge solution is also the posterior mean). If g is a double-exponential(Laplace) distribution with mean 0 and scale parameter a function of $\lambda$, then it follows that the posterior mode for $\beta$ is the lasso solution(but the lasso solution is not the posterior mean).
+	\item use CV to find the tuning parameter $\lambda$ for ridge and lasso
+	\item Dimension reduction methods P229 transform the original predictors $X_1,\ldots, X_p$ to $Z_1,\ldots,Z_M$ with lower dimension $M < p$
+	\[ Z_m = \sum_{j=1}^{p}\psi_{jm}X_j, m=1,\ldots,M.
+	\]
+	If the $\psi_{1m},\ldots,\psi_{pm}$ are chosen wisely, then regression on $Z_m$ with such dimension reduction can often outperform least squares regression.
+	\[y_i=\theta_0+\sum_{m=1}^{M}\theta_mz_{im} + \epsilon_i, i = 1,\ldots,n.
+	\]
+	\[\sum_{m=1}^{M}\theta_mz_{im}=\sum_{j=1}^{p}\sum_{m=1}^{M}\theta_m\psi_{jm}x_{ij}=\sum_{j=1}^{p}\beta_jx_{ij}.
+	\]
+	\[\beta_j=\sum_{m=1}^{M}\theta_m\psi_{jm}.
+	\]
+	So dimension reduction serves to constrain the estimated $\beta_j$ coef, since now we must take the specific form  above for $\beta_j$ as above. This constraint has the potential to bias the coef est. But in situations where p is large relative to n, selecting a value of $M << p$ can significantly reduce the variance of the fitted coef.
+	\item Principle component regression:
+\end{itemize}
+	
+	
+\section*{An Introduction to Statistical Learning Ch8 Tree}
+\subsection{2/6/2018}
+\begin{itemize}
+	\item The regression tree is a over-simplification of the true relationship btw response and predictors but has the advantage over other types of regression like easy to interpret and has nice graphical presentation.
+	\item prediction via stratification of the feature space: 
+	\begin{itemize}
+		\item[1] divide the predictor space into $J$ distinct and non-overlapping regions $R_1,R_2,\ldots,R_J$ that minimize the RSS, given by
+		\[
+		\sum_{j=1}^{J}\sum_{i\in R_j}(y_i-\hat{y_i})^2.
+		\]
+		\item[2] For every observation that falls into region $R_j$, we make the same prediction, which is simply the mean of the response values for the training observation in $R_j$.
+	\end{itemize}
+	\item Because it's computationally infeasible to consider every possible partition, we take a top-down, greedy approach known as  \textit{recursive binary splitting}. It's greedy because at each step of the tree-building process, the best split is make at that particular step, rather than leading to a global optimization. Splitting process continues until a stopping criterion is reached, for instance, until no region contains more than 5 observations.
+	
+	\item The regular decision tree is likely to overfit the data, leading to poor test set performance because the resulting tree might be too complex. We could set a higher threshold to get a small tree but this is too short-sighted since a seemingly worthless split may be followed by a very good split that leads to a large reduction in RSS later on.
+	\item \textit{Cost complexity prunning(weakest link pruning)} is a better strategy that grows a large tree $T_0$ and then prune it back to obtain a subtree that leads to the lowest test error rate. Instead of considering every possible subtree, we consider a sequence of trees indexed by a nonnegative tuning parameter$\alpha$, for each $\alpha$ there corresponds a subtree $T\subset T_0$ such that 
+	\[ \sum_{m=1}^{|T|}\sum_{i: x_i \in R_m }(y_i-\hat{y}_{R_m})^2 + \alpha|T|
+	\]
+	is as small as possible, $|T|$ indicates the number of leaves of tree T.(similar to the lasso) The process is summarized in Algorithm 8.1.
+	\item Classification tree, we predict that each observation belongs to the most commonly occurring class of training observations in the region to which it belongs to. Using classification error rate instead of RSS as the criterion for making a binary splitting. Classification error rate:
+	\[ E=1-\displaystyle{\max_{k}}(\hat{p}_{mk})
+	\]
+	$\hat{p}_{mk}$ represents the proportion of training obs in the m-th region that are from the k-th class. However, E is not sufficiently sensitive for tree-growing. In practice, Gini index and cross-entropy.
+	\item Gini index:\[
+	G=\sum_{k=1}^{K}\hat{p}_{mk}(1-\hat{p}_{mk}) \]
+	It's a measure of total variance across the K classes. Gini index takes on small values if all $\hat{p}_{mk}$ are close to 0, so Gini index is referred to as a measure of node purity: a small value indicates that a node contains predominantly obs from a single class.
+	\item cross-entropy:\[
+	D=-\sum_{k=1}^{K}\hat{p}_{mk} log(\hat{p}_{mk})\]
+	It's always positive value. Similarly, it takes on value near to 0 when $\hat{p}_{mk}$ close to 0 or near 1 and the cross-entropy will take on small value if the m-th node is pure. Gini index and cross-entropy are quite similar numerically.
+	\item Gini index and cross-entropy are typically used to evaluate the quality of a particular split, since the two are more sensitive to  node purity than is the classification error rate. All 3 can be used to prune a tree, the classification error rate is preferable if prediction accuracy of final pruned tree is the goal.
+	\item why is node purity important? because we are more certain on the classification if the corresponding leaf is purer P314.
+	\item Trees vs linear models, which one is better. It depends on the problem at hand. If the relationship btw the features and response, then Lm is likely to work better. If instead there is a highly non-linear and complex relationship, the decision tree may out-perform the classical approaches. In certain settings prediction using a tree may be preferred for the sake of interpretability and visualization.
+	\item Trees generally don't have the same level of predictive accuracy as others; Trees can be very non-robust. A small change in the data can cause a larger change in the final estimated tree.
+	\item Bootstrap is used in many situations in which it is hard or even impossible to directly compute the standard deviation of quantity of interest.
+	\item The decision tree suffers from high variance: if we split the training data into two parts at random and fit decision tree to both halves, the results could be very different. Linear regression tends to have low variance if the ration of n to p is moderately large. 
+	\item Bootstrap aggregation(bagging) is a general purpose procedure for reducing the variance of a statistical learning method, particular useful in the context of decision trees.
+	\item Averaging a set of observations reduces variance. Bagging: First generate B bootstrap training data sets, by repeatedly sample from the single training data set, then train our method on b-th bootstrapped training set to get $\hat{f}^{*b}(x)$ and finally average all the predictions to get $\hat{f}_{bag(x)}$. For quantitative prediction, we simply average the predictions. For qualitative response, we can record the class predicted by each of the B trees, and take a majority vote: the overall prediction is the most commonly occurring class among the B predictions. The number of trees B is not a critical parameter with bagging: using a very large value B will not lead to over-fitting.
+	\item  OOB error is the mean prediction error on each observation $x_i$, using only the trees that did not have $x_i$ in their bootstrap training sample. With B sufficiently large, OOB error is virtually equivalent to LOOCV error and OOB is particularly convenient when performing bagging on large set for which CV is computationally onerous P319.
+	\item Bagging improves prediction accuracy at the expense of interpretability, since when we bag a large number of trees, it's no longer possible to represent the result using a single tree.
+	\item We can obtain an overall summary of the importance of each predictor using the RSS(for bagging regression trees) or the Gini index(for bagging classification trees), by recording the total amount of reduction in RSS(or Gini) when splitting over given predictor, averaged over all B trees. A large value indicates an important predictor.
+	\item Random forests provide an improvement over bagged trees by decorrelating the trees. Each time a split in a tree is considered, a random sample of m predictors is chosen as a split candidate from the full set of p predictors. The split is allowed to use only one of the m predictors and typically we choose $m \approx \sqrt{p}$.
+	\item In random forests, it's not allowed to consider a majority of the available predictors. It makes sense b/c in bagging, if there is a very strong predictor, then in the collection of bagged trees, most or all the trees will use this strong predictor on top split. Consequently, all of the bagged trees will look quite similar(highly correlated). So random forest will lead to a substantial reduction in variance and more stable than bagging.
+	\item Using a small m when building random forest will typically be helpful when we have many correlated predictors. As with bagging, random forests will not overfit if we increase B P321.
+	\item Boosting, like bagging, it is a general approach that can be applied to many statistical learing methods for regression or classification. Boosting grows trees sequentially: each tree is  grown using information form previously grown trees. Unlike fitting a single large decision tree to the data, which amounts to fitting the data hard and potentially overfitting, the boosting approach instead learns slowly. Given the current model, we fit a decision tree to the residuals rather than y, and then add this new decision tree into the fitted function in order to update the residuals. Size of the trees d can be very small and shrinkage parameter $\lambda$ slows the process down even further, allowing more different shaped trees to attach the residuals. In general, statistical learning approaches that learn slowly tend to perform well. Boosting procedure is described in Algorithm 8.2. Boosting can overfit if B is large, so B is determined by CV. Shrinkage $\lambda$ has typical value 0.001 or 0.01. Very small $\lambda$ can require using a very large B to achieve good performance. The number of splits $d$ in each tree using 1 often works well P322 and leads to additive model(aid in interpretability)P323.
+	\item Deviance in \textit{summary()} is given by 
+	\[ -2\sum_{m}^{}\sum_{k}n_{mk}log\hat{p}_{mk}
+	\]
+	A small deviance indicates a tree that provides a good fit to the training data. The residual mean deviance is simply the deviance devided by $n-|T_0|$ P325. In regression tree, the deviance is simply the sum of squared error for the tree. We use cv.tree to see whether pruning the tree will improve performance P328.
+	\item Bagging is simply a special case of random forest with $m=p$, \textit{randomForest(..., mtry=p)}, by default, the \textit{randomForest()}  uses $p/3$ variables when building a random forest of regression trees, and $\sqrt{p}$ variables when building a random forest of classification trees. \textit{importance()} to view the importance of variables. Two measures of importance are reported. \textit{IncMSE} is based upon the mean increased MSE in predictions on the out of bag samples when a given variable is excluded from the model.\textit{InccNodePurity} is a measure of the total increase in node purity that results from splits over that variable average over all trees P330.
+	\item Use the \textit{gbm()} under \textit{gbm} package for boosting. P331, we can produce partial dependence plot for the most important two variables, which illustrate the marginal effect of the selected variables on the response after integrating out the other variables. The default shrinkage $\lambda=0.001$.
+	
+\end{itemize}
+	
+\section*{An Introduction to Statistical Learning Ch5 Resampling Methods}
+\subsection{2/1/2018}
+\begin{itemize}
+	\item CV can be used to estimate the test error associated with a given statistical method in order to evaluate its performance(model assessment), or to select the appropriate level of flexibility(model selection).
+	\item The validation set approach: It involves randomly dividing the available set of observations into two parts, a training set and a validation set or hold-out set. The validation set error rate typically assessed by MSE for quantitative response provides an estimate of the test error rate.
+	\item Two drawbacks of the validation set approach:
+	\begin{itemize}
+		\item The validation estimate of the test error rate can be highly variable, depending on the splitting of training and validation sets.
+		\item The validation set error rate may tend to overestimate the test error rate of the model fit on the entire data set(b/c only a subset of data used to train the model).
+	\end{itemize}
+	\item The LOOCV estimate for the test MSE is the average of n test error estimates:
+	\[CV_{(n)}=\frac{1}{n}\sum_{i=1}^{n}MSE_i
+	\]
+	It has a couple of major advantages over the validation set approach
+	\begin{itemize}
+		\item LOOCV has far less bias since it use $n-1$ obs for training, which is almost the entire data set. So, LOOCV tends not to overestimate the test error rate as much as validation set approach.
+		\item Performing LOOCV repeatedly will always yield the same results: there is not much randomness in the training/validation splits.
+	\end{itemize}
+	\item LOOCV has the potential to be expensive to implement, since the model has to be fit n times. With least squares linear or polynomial regression,
+	\[ CV_{(n)}=\frac{1}{n}\sum_{i=1}^{n}\big(\frac{y_i-\hat{y_i}}{1-h_i}\big)^2,
+	\]
+	where $h_i$ is the leverage, which reflects the amount that an observation influences the fit. The formula is like the ordinary MSE except for the denominator. So the cost of LOOCV is the same as that of a single model fit P180.
+	
+	\item k-fold CV: In practice, one typically performs k-fold CV with k=5 or 10 to reduce computation load compare to LOOCV but gives more accurate estimates of the test error rate than does LOOCV P183; Variability in k-fold CV estimates(test error rates) is much smaller compare to validation set approach Figure 5.4 right vs. Figure 5.2 right. By comparing the CV estimate of test error rate and the true test error rate, using CV to identify minimum point in the estimated test MSE curve comes close to the actual correct level of flexibility Figure 5.6.
+	\item From the perspective of bias reduction, LOOCV is to be preferred to k-fold CV because LOOCV use more observations for training; and the test error estimate from LOOCV tends to have higher variance than that from k-fold CV. Because, when we perform k-fold CV with $k<n$, we are average the outputs of k fitted models that are somewhat less correlated with each other, since the overlap between the training sets in each model is smaller than in LOOCV.
+	\item The mean of many highly correlated quantities has higher variance than does the mean of many quantities that are not as highly correlated. There is a bias-variance trade-off associate with the choice of k in k-fold CV, using k=5 or 10 has been shown empirically to yield test error estimates that suffer neither from excessively high bias nor from very high variance.
+	\item Rather than using MSE to quantify test error, we instead use the number of misclassified observations.\[
+	CV_{n}=\frac{1}{n}\sum_{i=1}^{n}Err_i,
+	\] 
+	where $Err_i=I(y_i\ne \hat{y_i})$, 
+	
+	\item Bootstrap: a powerful statistical tool can be used to quantify the uncertainty associated with a given estimate.
+	\item For k-fold CV: \\ \verb|library(boot)|\\  \verb|glm.fit=glm(mpg~poly(horsepower,i),data=Auto)|\\
+	\verb|cv.error.10[i]= cv.glm(Auto,glm.fit,K=10)delta[1]|
+	
+	\item For bootstrap:\\ \verb|alpha.fn=function{data,index}|\\  \verb|boot(Portfolio,alpha.fn,R=1000)|\\
+	\verb|boot.fn=function{data,index} coefficients(lm(mpg~hp,data=data,subset=index))|
+	
+\end{itemize}
+
+\section*{An Introduction to Statistical Learning Ch4 Classification}
+\subsection{1/24/2018}
+\begin{itemize}
+	\item Why not use linear regression for classification? 1. Encoding the response as ordinal variable could produce fundamentally different linear models for different encoding, unless there is a natural ordering P130; 2. Even though binary response can be coded as dummy variable and use linear regression, $X\hat{\beta}$ is a estimate of $Pr(Y=1|X)$, it could be out of [0,1], make then hard to interpreted as probabilities. The classification using dummy variable for binary response will be the same as for the LDA procedure. 
+	\item logistic function:
+	\[p(X)=Pr(Y=1|X)=\frac{e^{\beta_0+\beta_1X}}{1+e^{\beta_0+\beta_1X}}
+	\]
+	logit function:
+	\[log \big( \frac{p(X)}{1-p(X)} \big)=\beta_0+\beta_1X
+	\]
+	\item The intuition behind using maximum likelihood to fit a logistic regression model is as follows: we seek estimate of $\beta_0$ and $\beta_1$ such that the predicted probability$\hat{p}(y_i=1|x_i)$ corresponds as closely as possible to the individual's observed stuatus.The log-likelihood function:
+	\[l(\beta_0,\beta_1)=\sum_{i:y_i=1}^{}p(x_i)\sum_{i':y_{i'}=0}^{}(1-p(x_{i'}))
+	\]
+	\item Confounding variables: the real effect of a predictor is masked(with opposite effect) by another variable, which is a result of collinearity among predictors in the example P136. From the web: A confounding variable is an outside influence that changes the effect of a dependent and independent variable; it can lead to erroneous conclusions about the relationship between the independent and dependent variables. 
+	\item why use LDA instead of logistic regression when there are $> 2$ classes? LDA is more stable than the logistic regression when the classes are well separated, or when n is small and distribution of X is approximately normal. P138
+	\item Use Bayes' Theorem for Classification: 
+	\[ p_k(x)=Pr(Y=l|X=x)=\frac{\pi_kf_k(x)}{\sum_{l=1}^{K}\pi_lf_l(x)}
+	\]
+	just like in Bayes classifier, which classify an observation to the class for which $p_k(x)$ is largest, has the lowest possible error rate out af all classifiers. LDA is to approximate the Bayes classifier with estimated $f_k(x)$ and it assumes $f_k(x)$ is Gaussian and there is a common variance across all K classes. LDA classifier assumes that the observations in the k-th class are drawn from a multivariate Gaussian distribution $N(\mu_k,\Sigma)$. P143.
+	\item Discriminant function for $p=1$ (1 predictor):
+	\[\hat{\delta}_k(x)=x\cdot \frac{\hat{\mu}_k}{\hat{\sigma}^2}-\frac{\hat{\mu}_k^2}{2\hat{\sigma}^2} +log(\hat{\pi}_k)
+	\]
+	The word linear in LDA stems from the fact that the discriminant functions $\hat{\delta}_k(x)$ are linear functions of x. P141.
+	\item Discriminant function for $p>1$ (matrix/vector version):
+	\[\delta_k(x)=x^T\Sigma^{-1}\mu_k-\frac{1}{2}\mu_k^T\Sigma^{-1}\mu_k +log(\pi_k)
+	\]
+	\item Two caveats about the training error rate: P144.
+		\begin{itemize}
+			\item training error rates will usually be lower than test error rates, which are the real quantity of interest. The reason is that we specifically adjust the parameters of our model to do well on the training data. The higher the ratio of parameters p to number of samples n, the more we expect this overfitting to play a role.
+			\item The data is very imbalanced(only 3.33\% in the training sample has y=1), The trivial null classifier will achieve a error rate that is only a bit higher than the LDA training set error rate.
+		\end{itemize}
+	\item LDA is trying to approximate the Bayes classifier, which has the lowest TOTAL error rate in the confusion matrix out of all classifier. That is, the Bayes classifier will yield the smallest possible total number of misclassified observations, irrespective of which class the errors come from P145. We can modify the threshold value for the posterior probability of Y=1 to save the business cost of misclassification, Figure 4.7 is a good visual tool, but the decide on the best threshold value must be based on domain knowledge about the associated cost. P147.
+	\item ROC curve(Receiving Operating Characteristic) traces the two types of error as we vary the threshold value for the posterior probability of $Y=1$. The true positive rate on y-axis is the fraction of Y=1 classified correctly (which is called sensitivity). The false positive rate on x-axis is $1-specificity$, the fraction of Y=0 that are incorrectly classified as 1. The ideal ROC hugs the top left corner, indicating a high true positive rate and low false positive rate.
+	\item The overall performance of a classifier, summarized over all possible thresholds is given by the AUC(area under the (ROC) curve), the larger the AUC the better the classifier. P147.
+	\item Table 4.7 shows important measures for classification and diagnostic testing.
+	\item QDA assumes that the observation from class $k$ are drawn from a Gaussian distribution $N(\mu_k,\Sigma_k)$, and assign an observation X=x to the class for which \[
+	\delta_k(x)=-1/2x^T{\Sigma_k^{-1}}x + 1/2x^T{\Sigma_k^{-1}}\mu_k -1/2{\mu_k}^T{\Sigma_k^{-1}}\mu_k -1/2 log|\Sigma_k| + log\pi_k
+	\]
+	is largest.
+	\item why would one prefer LDA  to QDA? LDA is a much less flexible classifier than QDA and so has substantial lower variance. But if LDA's assumption that K classes share a common covariance matrix is badly off, then LDA can suffer from high bias. Roughly speaking, LDA tends to be a better bet than QDA if there are relatively few training observations and so reducing variance if crucial. In contrast, QDA is recommended if the training set is very large or if the assumption of common covariance matrix for the K classes is clearly untenable (unjustifiable).
+	\item A comparison of 4 classifiers: Logistic regression, LDA, QDA and KNN. Both Logistic and LDA produce linear boundaries, the only difference btw them lies in the fact that parameters in logistics reg are estimated by MLE, whereas parameters in LDA computed using the estimated mean and covariance of normal distribution. KNN is a completely non-parametric approach: no assumptions are made on the decision boundaries. KNN would dominate logistic reg and LDA in prediction when the decision boundary is highly non-linear. But KNN would not tell which predictor are important. QDA serves as a compromise btw non-parametric KNN and the linear LDA/logistic. Since QDA assumes a quadratic boundary, it can model a wider range of problems than linear methods, though not as flexible as KNN.
+	\item In the logistic regression setting we can accommodate a non-linear relationship btw the predictors and response by performing regression using transformation of predictors(e.g., by including $X^2$). This may or may not improve the performance, depending on whether the increase in variance due to the added flexibility is offset by a sufficiently large reduction in bias. We could do the same for LDA, If added all possible quadratic terms and cross-product to LDA, the form of model would be the same as QDA, though the parameter estimates would be different. This allow us to move somewhere between LDA and QDA.
+	\item Using predictors that have no relationship with the response tends to cause a deterioration in the test error rate (since such predictors can cause an increase in variance without a corresponding decrease in bias), and so removing such predictors may in turn yield an improvement. P160.
+	\item For KNN, the scale(unit) of the variables matters on the distance! Any variables that are on a large scale will have a much larger effect on the distance btw the observations, and hence on the KNN classifier. P165. A good way to handle this problem is to standardize the data so that all variables are given a mean of zero and a standard deviation of one, so that on a comparable scale.
+	
+\end{itemize}
+
+
+\section*{An Introduction to Statistical Learning Ch3}
+\subsection{1/15/2018}
+\begin{itemize}
+	\item An unbiased estimator does not systematically over- or under-estimate the true parameter. P65
+	\item In $SE(\hat{\beta_0})$ and $SE(\hat{\beta_1})$, the error variance $\sigma^2$ is estimated by $RSE=\sqrt{(RSS)/(n-2)}$. P66
+	\item a small p-value indicates that it's unlikely to observe such a substantial association btw the predictor and the response due to the chance, in the absence of any real association btw the predictor and the response. So if we see a small p-value, we can infer there is an association btw the predictor and the response. P67
+	\item To quantify the extent to which the model fits the data: Residual Standard Error(RSE) and $R^2$. The RSE is an estimate of the standard deviation of $\epsilon$. It is roughly the average amount that the response will deviate from the true regression line in the units of y. It measures the lack of fit of model to data. The paragraph under (3.16) on P69 illustrate the meaning of it with example. 
+	\item $R^2$ measures the proportion of variety in y can be explained using x. And it is a measure of the linear relationship btw x and y. In SLR, $R^2=r^2$, where r is the correlation btw x and y.	
+	\item The optimal K in KNN will depend on the bias-variance tradeoff: smaller K has large bias, and larger K has higher variance P105. Bias refers to the error that is introduced by approximating a real-life problem, which maybe extremely complicated, by a much simpler model Ch2 P35. Variance refers to the amount by which $\hat{f}$ will change if we estimated it use a different training data set Ch 2 P34. As a general rule, as we use more flexible methods(more predictors, or larger $1/K$), the variance will increase and the bias will decrease P35.
+	
+	\item  The parametric approach will outperform the nonparametric approach if the parametric form that has been selected is close to the true form of $f$. P106
+	\item Curse of dimensionatily to make KNN a poor prediction: the K observations that are nearest to a given test observation $x_0$ may be very far away from $x_0$ when $p$ is large comparing to the distance when $p=1,2$ P108.
+	
+\end{itemize}
+	
+\section*{An Introduction to Statistical Learning Ch2}
+\subsection{12/17/2017}
+\begin{itemize}
+	\item How to estimate f: Parametric and Non-parametric
+	\item The order of trade-off btw flexibility(prediction accuracy) and interpretability: Sebset selection, Lasso; Least square; Generalized additive models, Trees; Bagging, Boosting; Support vector machines.
+	\item Generalized additive models(GAMs) are more flexible than linear regression because the relationship btw each predictor and the response is now modeled using a curve. \textcolor{red} {why it's a curve? allow higher order?}
+	\item For unsupervised learning, we can seek to understand the relationships btw variables or between the observations. One tool is cluster analysis or clustering. ascertain： 弄清，确定，查明
+	\item MSE(Mean squared error) is the most commonly-used measure for quality of fit in regression setting.
+	\item Expected test MSE can be decomposed as Bias+ Variance + variance of irreducible error in (2.7)
+	\[
+	E(y_0-\hat{f}(x_0))^2=Var(\hat{f}(x_0)) +[Bias(\hat{f}(x_0))]^2 +Var(\epsilon)
+	\]
+	\item The Bayes Classifier assign each observation to the most likely class given its predictor value$Pr(Y=j|X=x_0)$. It has the minimum test error rate in (2.9) $	Ave(I(y_0\ne \hat{y_0}))$(the error rate associate with the test set) on average P37. The Bayes classifier produces the lowest possible test error rate, called the Bayes error rate: 
+	\[
+	1-E(\displaystyle{\max_{j}} Pr(Y=j|X)),
+	\]
+	where the expectation averages the probability over all possible values of X. \textcolor{red}{(how to do this average?)}
+\end{itemize}
+
+
+	
+	
+	
 
 \section*{Chapter 1} %the star prohibited the automatic numbering
 \subsection*{6/16/2017}
