@@ -8,8 +8,43 @@
 \usepackage{color}
 \usepackage{amsmath}
 \begin{document}
+
+\section*{Linear model selection and regularization Ch6 }
+\subsection{5/14/2018}
+\begin{itemize}
+	\item Hyperplane P338
+	\item Maximal margin classifier: choose the optimal separating hyperplane, which is farthest from the training observations. The smallest perpendicular distance from all training observations to the hyperplane is called margin. Maximal margin hyperplane has the farthest minimum distance to the training observations, which represents the mid-line of the widest "slab" that we can insert between the two classes. Optimization problem (9.9)-(9.11)!!! P343
+	\item Support vectors: the maximal margin hyperplane depends only on a small subset of the observations(that lies on the edge of the margin) but not on the other observations.  if these points are moved then the maximal margin hyperplane would move as well. A movement to any of the other observations would not affect the separating hyperplane, provided that the movement doesn't across the margin boundary	.
+	\item Support vector classifier: when the observations are not separable by a hyperplane or when the separating hyperplane is very sensitive to a change in a single observation, we will use support vector classifier that allows some misclassified observations(on the wrong side of margin or even the incorrect side of hyperplane, so called soft margin classifier), to achieve greater robustness and better classification of most training observations.Optimization problem (9.12)-(9.15)!!! P346
+	\item C is a tuning parameter, which is the budget for the amount that the margin can be violated. No more than C observations can be on the wrong side of the hyperplane. As with tuning parameters that we've seen throughout this book, C controls the bias-variance trade-off of the classifier. When C is larger, the margin is wider and allow more violations; this amounts to fitting the data less hard and obtaining a classifier more biased but have lower variance. 
+	\item Only observations that lie on the margin or that violated the margin will affect the hyperplane, which are called support vectors. If C is large, then there are more support vectors (involve in determining the hyperplane), which leads to low variance of the classifier
+	\item support vector classifier is applied when the boundary between two classes is linear. Performance of linear models can suffer when there is a non-linear relationship (non-linear boundaries), in which we consider enlarging the feature space using  quadratic, cubic, and even polynomial functions of the predictors to address the non-linearity. Optimization problem (9.16)!!! P350.
+	\item support vector machine is an extension of support vector classifier that results from enlarging the feature space using kernels. The computation details:  the solution to support vector classifier problem(9.12)-(9.15) involves only the inner products of the observations, which can be represented as 
+	\[
+	f(x)=\beta_0 +\sum{i=0}{n} \alpha_i<x,x_i>
+	\]
+It turns out that $\alpha_i$ is nonzero only for the support vectors $x_i$. We replace the inner product with a generalization of it in kernel form
+\[
+K(x_i,x_{i'})
+\]
+A kernel is a function that quantifies the similarity of two observations. If taking 
+\[
+K(x_i,x_{i'})=\sum{j=1}{p}x_{ij}x_{i'j}
+\]
+it just give us back the linear support vector classifier so it's called a linear kernel. If taking polynomial kernel
+\[
+K(x_i,x_{i'})=(1+\sum{j=1}{p}x_{ij}x_{i'j})^d
+\]
+with d > 1, it leads to a much more flexible decision boundary. It essentially amounts to fitting a support vector classifier in a higher-dimensional space involving polynomials of degree d. When the support vector classifier is combined with a non-linear kernel, the resulting classifier is known as support vector machine.
+\item redial kernel 
+\[ K(x_i,x_{i'})=exp(-\gamma \sum{j=1}{p}(x_{ij}-x_{i'j})^2),
+\]
+where $\gamma$ is a positive constant. If a testing observation $x^*$is far from training observation $x_i$, then $x_i$ will play virtually no role in $f(x^*)$. This means that the radial kernel has very local behavior, in the sense that only nearby training observations have an effect on the class label of the test obs.
+\item The advantage of using a kernel rather than simply enlarging the feature space using functions of the original features is computation efficiency. Using kernels, one need only compute K for C_n^2 distinct pairs, which can be done without explicitly working with the enlarged feature space. It's important because in many applications of SVMs, the enlarged feature space is so large that computation is intractable/unmanageable. For radial kernel, the feature space if implicit and infinite-dimensional so we could never do the computation explicitly.
+\end{itemize}
 	
-\section*{An Introduction to Statistical Learning Ch8 Tree}
+	
+\section*{Linear model selection and regularization Ch6 }
 \subsection{2/11/2018}
 \begin{itemize}
 	\item The best subset selection, first get best models $M_0,\ldots,M_p$ for 0 to p variables in the model(each need $C_k^p$ models to compare), then use CV to compare $M_0,\ldots,M_p$ using CV test error $C_p$, AIC,BIC or $R^2$.
